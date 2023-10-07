@@ -74,7 +74,8 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- NOTE: This is where your plugins related to LSP can be installed.
+  -- NOTE: This is where your plugins related to LSP (Language Server Protocol) can be installed.
+  -- :help lsp to learn more
   --  The configuration is done below. Search for lspconfig to find it below.
   {
     -- LSP Configuration & Plugins
@@ -89,6 +90,7 @@ require('lazy').setup({
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
+      -- :help neodev.nvim.txt
       'folke/neodev.nvim',
     },
   },
@@ -144,6 +146,7 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
+    -- (Note to self - review nvim themes)
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
@@ -254,13 +257,14 @@ vim.o.smartcase = true
 vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.updatetime = 1000 -- Default: 4000
+vim.o.timeoutlen = 500 -- Default: 1000
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
+-- NOTE: Research how to make this vary between color and colorless terminals
 vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
@@ -326,10 +330,8 @@ vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim' },
-  
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
-  
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
@@ -452,6 +454,8 @@ require('which-key').register({
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+--  Installation will require the appropriate executables be installed in your environment
+--  Many require npm
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
@@ -461,10 +465,12 @@ require('which-key').register({
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
+  remark_ls = {},
   -- rust_analyzer = {},
   -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  html = { filetypes = { 'html', 'twig', 'hbs'} },
+  stylelint_lsp = {},
 
   lua_ls = {
     Lua = {
